@@ -1,2 +1,20 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-// endepoint: https://economia.awesomeapi.com.br/json/all
+import { GET_CURRENCIES } from '../actions';
+
+const INITIAL_STATE = {
+  currencies: [],
+};
+
+const wallet = (state = INITIAL_STATE, action) => {
+  switch (action.type) {
+  case GET_CURRENCIES:
+    return {
+      ...state,
+      currencies: action.data,
+    };
+  default:
+    return state;
+  }
+};
+
+export default wallet;
