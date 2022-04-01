@@ -26,14 +26,24 @@ class Login extends React.Component {
     const caracters = 6;
     const passValidate = password.length >= caracters;
     const validationEmail = /\S+@\S+\.\S+/;
-    const emailValidate = validationEmail === email;
-    if (emailValidate && passValidate) this.setState({ disabledButtonSave: false });
+    const emailValidate = validationEmail.test(email);
+    if (emailValidate && passValidate) {
+      this.setState({ disabledButtonSave: false });
+    } else {
+      this.setState({ disabledButtonSave: true });
+    }
   };
+
+  // fonte do Regex: https://www.horadecodar.com.br/2020/09/07/expressao-regular-para-validar-e-mail-javascript-regex/
 
   handleClick = () => {
     const { history, saveUserData } = this.props; // salvar só email ou senha tbm?
     saveUserData(this.state);
-    console.log(saveUserData(this.state));
+    this.setState({
+      email: '',
+      password: '',
+      disabledButtonSave: true,
+    });
     history.push('/carteira');
   }
 
@@ -47,7 +57,8 @@ class Login extends React.Component {
             data-testid="email-input"
             id="email"
             type="text"
-            name={ email }
+            name="email"
+            value={ email }
             onChange={ this.inputChange }
           />
         </label>
@@ -57,7 +68,8 @@ class Login extends React.Component {
             data-testid="password-input"
             id="pass"
             type="text"
-            name={ password }
+            name="password"
+            value={ password }
             onChange={ this.inputChange }
           />
         </label>
