@@ -10,9 +10,10 @@ export const currencies = () => async (dispatch) => {
   try {
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
     const data = await response.json();
-    const dataFilter = data.filter((currencie) => currencie !== currencie.USDT);
-    dispatch(getDataCurrencies(dataFilter));
-    console.log(dataFilter);
+    console.log(data);
+    const keysData = Object.keys(data);
+    const newData = keysData.filter((curr) => curr !== 'USDT');
+    dispatch(getDataCurrencies(newData));
   } catch (error) {
     console.error(error);
   }

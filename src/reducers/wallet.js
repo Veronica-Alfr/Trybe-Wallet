@@ -6,6 +6,7 @@ const INITIAL_STATE = {
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
+  console.log(action.data); // undefined;
   switch (action.type) {
   case GET_CURRENCIES:
     return {
