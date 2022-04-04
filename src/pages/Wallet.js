@@ -9,9 +9,6 @@ class Wallet extends React.Component {
     this.state = {
       valueExpense: 0,
       description: '',
-      currency: '',
-      // methodPayment: '',
-      // category: '',
     };
   }
 
@@ -29,7 +26,7 @@ class Wallet extends React.Component {
 
   render() {
     const { email, currenciesExpenses } = this.props;
-    const { valueExpense, description, currency } = this.state;
+    const { valueExpense, description } = this.state;
     return (
       <main>
         <header>
