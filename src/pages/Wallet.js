@@ -28,7 +28,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, currenciesData } = this.props;
+    const { email, currenciesExpenses } = this.props;
     const { valueExpense, description, currency } = this.state;
     return (
       <main>
@@ -58,7 +58,7 @@ class Wallet extends React.Component {
               value={ description }
             />
           </label>
-          {/* <label htmlFor="currency">
+          <label htmlFor="currency">
             Moeda
             <select
               data-testid="currency-input"
@@ -66,12 +66,11 @@ class Wallet extends React.Component {
               name="currency-expense"
             >
               {
-                currenciesData
+                currenciesExpenses
                   .map(
-                    (curr, index) => (
+                    (curr) => (
                       <option
-                        value={ currency }
-                        key={ index }
+                        key={ curr }
                       >
                         { curr }
                       </option>
@@ -79,17 +78,18 @@ class Wallet extends React.Component {
                   )
               }
             </select>
-          </label> */}
+          </label>
           <label htmlFor="method">
             Metódo de Pagamento:
             <select
               data-testid="method-input"
               id="method"
               name="method-payment"
+              onChange={ this.inputChange }
             >
-              <option value="Dinheiro">Dinheiro</option>
-              <option value="Cartão de crédito">Cartão de crédito</option>
-              <option value="Cartão de débito">Cartão de débito</option>
+              <option>Dinheiro</option>
+              <option>Cartão de crédito</option>
+              <option>Cartão de débito</option>
             </select>
           </label>
           <label htmlFor="category">
@@ -114,6 +114,7 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  currenciesExpenses: state.wallet.currencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -123,6 +124,7 @@ const mapDispatchToProps = (dispatch) => ({
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   currenciesData: PropTypes.func.isRequired,
+  currenciesExpenses: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
