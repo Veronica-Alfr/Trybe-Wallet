@@ -38,6 +38,7 @@ class Wallet extends React.Component {
   }
 
   // Ajuda de Thiago Zardo, Laís Nametala e Kleverson Eller (Tribo C) no requisito 6.
+  // Não consigo alterar os dados do form
 
   render() {
     const { email, currenciesExpenses, expenses } = this.props;
@@ -128,16 +129,17 @@ class Wallet extends React.Component {
         </form>
         <button type="button" onClick={ this.saveDataForm }>Adicionar despesa</button>
         <table>
-          <tr>
+          <thead>
             <th>Descrição</th>
-            <th>Categoria</th>
-            <th>Metódo de Pagamento</th>
+            <th>Tag</th>
+            <th>Método de pagamento</th>
             <th>Valor</th>
             <th>Moeda</th>
-            <th>Câmbio Utilizado</th>
-            <th>Valor Convertido</th>
-            <th>Moeda de Conversão</th>
-          </tr>
+            <th>Câmbio utilizado</th>
+            <th>Valor convertido</th>
+            <th>Moeda de conversão</th>
+            <th>Editar/Excluir</th>
+          </thead>
           {/* <td>{ test[0].description }</td> */}
           {
             expenses.map(
