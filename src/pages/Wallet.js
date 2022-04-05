@@ -28,16 +28,16 @@ class Wallet extends React.Component {
   }
 
   saveDataForm = () => {
-    const { formData, stateGlobal } = this.props;
+    const { dataAPI, stateGlobal } = this.props;
     const obj = {
       id: 0,
       ...this.state,
-      exchangeRates: formData(),
+      exchangeRates: dataAPI(),
     };
     stateGlobal(obj);
   }
 
-  // Ajuda de Kleverson Eller (Tribo C) no requisito 6.
+  // Ajuda de Thiago Zardo, Laís Nametala e Kleverson Eller (Tribo C) no requisito 6.
 
   render() {
     const { email, currenciesExpenses, expenses } = this.props;
@@ -169,7 +169,7 @@ Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   currenciesData: PropTypes.func.isRequired,
   currenciesExpenses: PropTypes.arrayOf(PropTypes.string).isRequired,
-  formData: PropTypes.func.isRequired,
+  dataAPI: PropTypes.func.isRequired,
   stateGlobal: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
