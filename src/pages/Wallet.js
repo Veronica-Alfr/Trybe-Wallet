@@ -40,7 +40,7 @@ class Wallet extends React.Component {
   // Ajuda de Kleverson Eller (Tribo C) no requisito 6.
 
   render() {
-    const { email, currenciesExpenses } = this.props;
+    const { email, currenciesExpenses, expenses } = this.props;
     const { valueExpense, description, currency, method, category } = this.state;
     return (
       <main>
@@ -171,6 +171,7 @@ Wallet.propTypes = {
   currenciesExpenses: PropTypes.arrayOf(PropTypes.string).isRequired,
   formData: PropTypes.func.isRequired,
   stateGlobal: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
