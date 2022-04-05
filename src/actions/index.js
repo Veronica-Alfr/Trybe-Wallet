@@ -20,15 +20,14 @@ export const currencies = () => async (dispatch) => {
   }
 };
 
-export const fetchAPI = () => async (dispatch) => {
-  try {
-    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const data = await response.json();
-    console.log(data);
-    dispatch(getData(data));
-  } catch (error) {
-    console.error(error);
-  }
-};
+// export const fetchAPI = (obj) => async (dispatch) => {
+//   try {
+//     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+//     const data = await response.json();
+//     dispatch(getData());
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
 export default isUserInfos;

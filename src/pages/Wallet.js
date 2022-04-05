@@ -1,17 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { currencies, fetchAPI, getData } from '../actions/index';
+import { currencies, getData } from '../actions/index';
 
 class Wallet extends React.Component {
   constructor() {
     super();
     this.state = {
-      valueExpense: 0,
+      value: 0,
       description: '',
       currency: '',
       method: '',
-      category: '',
+      tag: '',
     };
   }
 
@@ -27,22 +27,38 @@ class Wallet extends React.Component {
     });
   }
 
-  saveDataForm = () => {
-    const { dataAPI, stateGlobal } = this.props;
-    const obj = {
-      id: 0,
-      ...this.state,
-      exchangeRates: dataAPI(),
-    };
-    stateGlobal(obj);
+  // changeId = () => {
+  //   const test = ;
+  // }
+
+  saveDataForm = async () => {
+    const { stateGlobal } = this.props;
+    try {
+      const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+      const data = await response.json();
+      console.log(data);
+      const obj = {
+        id: 0,
+        ...this.state,
+        exchangeRates: data,
+      };
+      console.log(data);
+      stateGlobal(obj);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   // Ajuda de Thiago Zardo, Laís Nametala e Kleverson Eller (Tribo C) no requisito 6.
   // Não consigo alterar os dados do form
 
+  // sumWithExchange = () => {
+
+  // }
+
   render() {
-    const { email, currenciesExpenses, expenses } = this.props;
-    const { valueExpense, description, currency, method, category } = this.state;
+    const { email, currenciesExpenses } = this.props;
+    const { value, description, currency, method, tag } = this.state;
     return (
       <main>
         <header>
@@ -57,8 +73,8 @@ class Wallet extends React.Component {
               data-testid="value-input"
               type="number"
               id="value"
-              name="value-expense"
-              value={ valueExpense }
+              name="value"
+              value={ value }
               onChange={ this.inputChange }
             />
           </label>
@@ -68,7 +84,7 @@ class Wallet extends React.Component {
               data-testid="description-input"
               type="text"
               id="description"
-              name="description-expense"
+              name="description-"
               value={ description }
               onChange={ this.inputChange }
             />
@@ -78,7 +94,7 @@ class Wallet extends React.Component {
             <select
               data-testid="currency-input"
               id="currency"
-              name="currency-expense"
+              name="currency"
               value={ currency }
               onChange={ this.inputChange }
             >
@@ -101,7 +117,7 @@ class Wallet extends React.Component {
             <select
               data-testid="method-input"
               id="method"
-              name="method-payment"
+              name="method"
               value={ method }
               onChange={ this.inputChange }
             >
@@ -115,8 +131,8 @@ class Wallet extends React.Component {
             <select
               data-testid="tag-input"
               id="category"
-              name="category-expense"
-              value={ category }
+              name="tag"
+              value={ tag }
               onChange={ this.inputChange }
             >
               <option>Alimentação</option>
@@ -141,14 +157,14 @@ class Wallet extends React.Component {
             <th>Editar/Excluir</th>
           </thead>
           {/* <td>{ test[0].description }</td> */}
-          {
+          {/* {
             expenses.map(
               (expense) => (
                 <tr key={ expense.id }>
                   <td>{ expense.description }</td>
                 </tr>),
             )
-          }
+          } */}
         </table>
       </main>
     );
@@ -163,17 +179,17 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   currenciesData: (data) => dispatch(currencies(data)),
-  dataAPI: () => dispatch(fetchAPI()),
-  stateGlobal: (state) => dispatch(getData(state)),
+  // dataAPI: () => dispatch(fetchAPI()),
+  stateGlobal: (obj) => dispatch(getData(obj)),
 });
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   currenciesData: PropTypes.func.isRequired,
   currenciesExpenses: PropTypes.arrayOf(PropTypes.string).isRequired,
-  dataAPI: PropTypes.func.isRequired,
+  // dataAPI: PropTypes.func.isRequired,
   stateGlobal: PropTypes.func.isRequired,
-  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
+  // expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
