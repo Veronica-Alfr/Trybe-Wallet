@@ -36,17 +36,16 @@ class Wallet extends React.Component {
     try {
       const response = await fetch('https://economia.awesomeapi.com.br/json/all');
       const data = await response.json();
-      console.log(data);
       const obj = {
         id: 0,
         ...this.state,
         exchangeRates: data,
       }; // id: state.id + 1 ?
-      console.log(data);
       stateGlobal(obj);
     } catch (error) {
       console.error(error);
     }
+    this.sumWithExchange();
   }
 
   // Ajuda de Thiago Zardo, Laís Nametala e Kleverson Eller (Tribo C) no requisito 6.
@@ -55,7 +54,10 @@ class Wallet extends React.Component {
   sumWithExchange = () => {
     const { expenses } = this.props;
     console.log(expenses);
-    // const exchange = expenses.reduce(()); // posso usar forEach
+    const expenseValue = expenses.map(({ value }) => value); // posso usar forEach
+    console.log(expenseValue);
+    const exchange = expenses.map(({ exchangeRates }) => Object.values(exchangeRates));
+    console.log(exchange);
     // value, exchangeRates e currency estão em expenses; expenses[value]
     // pegar a moeda de conversão
     // 100 em USD deve ser 456 reais, por ex -> ask: 4.56
