@@ -9,9 +9,9 @@ class Wallet extends React.Component {
     this.state = {
       value: 0,
       description: '',
-      currency: '',
-      method: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
   }
 
@@ -41,7 +41,7 @@ class Wallet extends React.Component {
         id: 0,
         ...this.state,
         exchangeRates: data,
-      };
+      }; // id: state.id + 1 ?
       console.log(data);
       stateGlobal(obj);
     } catch (error) {
@@ -52,12 +52,17 @@ class Wallet extends React.Component {
   // Ajuda de Thiago Zardo, Laís Nametala e Kleverson Eller (Tribo C) no requisito 6.
   // Não consigo alterar os dados do form
 
-  // sumWithExchange = () => {
-
-  // }
+  sumWithExchange = () => {
+    const { expenses } = this.props;
+    console.log(expenses);
+    // const exchange = expenses.reduce(()); // posso usar forEach
+    // value, exchangeRates e currency estão em expenses; expenses[value]
+    // pegar a moeda de conversão
+    // 100 em USD deve ser 456 reais, por ex -> ask: 4.56
+  }
 
   render() {
-    const { email, currenciesExpenses } = this.props;
+    const { email, currenciesExpenses, expenses } = this.props;
     const { value, description, currency, method, tag } = this.state;
     return (
       <main>
@@ -84,7 +89,7 @@ class Wallet extends React.Component {
               data-testid="description-input"
               type="text"
               id="description"
-              name="description-"
+              name="description"
               value={ description }
               onChange={ this.inputChange }
             />
@@ -146,25 +151,29 @@ class Wallet extends React.Component {
         <button type="button" onClick={ this.saveDataForm }>Adicionar despesa</button>
         <table>
           <thead>
-            <th>Descrição</th>
-            <th>Tag</th>
-            <th>Método de pagamento</th>
-            <th>Valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
-            <th>Moeda de conversão</th>
-            <th>Editar/Excluir</th>
+            <tr>
+              <th>Descrição</th>
+              <th>Tag</th>
+              <th>Método de pagamento</th>
+              <th>Valor</th>
+              <th>Moeda</th>
+              <th>Câmbio utilizado</th>
+              <th>Valor convertido</th>
+              <th>Moeda de conversão</th>
+              <th>Editar/Excluir</th>
+            </tr>
           </thead>
           {/* <td>{ test[0].description }</td> */}
-          {/* {
+          {
             expenses.map(
               (expense) => (
-                <tr key={ expense.id }>
-                  <td>{ expense.description }</td>
-                </tr>),
+                <tbody key={ expense.id }>
+                  <tr>
+                    <td>{ expense.description }</td>
+                  </tr>
+                </tbody>),
             )
-          } */}
+          }
         </table>
       </main>
     );
@@ -189,7 +198,7 @@ Wallet.propTypes = {
   currenciesExpenses: PropTypes.arrayOf(PropTypes.string).isRequired,
   // dataAPI: PropTypes.func.isRequired,
   stateGlobal: PropTypes.func.isRequired,
-  // expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
