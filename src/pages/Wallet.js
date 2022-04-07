@@ -3,15 +3,18 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { currencies, getData } from '../actions/index';
 
+const alimentacao = 'Alimentação';
+
 class Wallet extends React.Component {
   constructor() {
     super();
     this.state = {
+      id: 0,
       value: 0,
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
-      tag: 'Alimentação',
+      tag: alimentacao,
     };
   }
 
@@ -27,25 +30,27 @@ class Wallet extends React.Component {
     });
   }
 
-  // changeId = () => {
-  //   const test = ;
-  // }
-
   saveDataForm = async () => {
     const { stateGlobal } = this.props;
     try {
       const response = await fetch('https://economia.awesomeapi.com.br/json/all');
       const data = await response.json();
       const obj = {
-        id: 0,
         ...this.state,
         exchangeRates: data,
-      }; // id: state.id + 1 ?
+      };
       stateGlobal(obj);
+      this.setState((prev) => ({
+        id: prev.id + 1,
+        value: 0,
+        description: '',
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: alimentacao,
+      }));
     } catch (error) {
       console.error(error);
     }
-    this.sumWithExchange();
   }
 
   // Ajuda de Thiago Zardo, Laís Nametala e Kleverson Eller (Tribo C) no requisito 6.
@@ -53,14 +58,13 @@ class Wallet extends React.Component {
 
   sumWithExchange = () => {
     const { expenses } = this.props;
-    console.log(expenses);
-    const expenseValue = expenses.map(({ value }) => value); // posso usar forEach
-    console.log(expenseValue);
-    const exchange = expenses.map(({ exchangeRates }) => Object.values(exchangeRates));
-    console.log(exchange);
-    // value, exchangeRates e currency estão em expenses; expenses[value]
-    // pegar a moeda de conversão
-    // 100 em USD deve ser 456 reais, por ex -> ask: 4.56
+    if (expenses.length > 0) {
+      return expenses.reduce((acc, curr) => {
+        acc += Number(curr.value) * Number(curr.exchangeRates[curr.currency].ask);
+        return acc;
+      }, 0).toFixed(2);
+    }
+    return 0;
   }
 
   render() {
@@ -70,7 +74,7 @@ class Wallet extends React.Component {
       <main>
         <header>
           <p data-testid="email-field">{ email }</p>
-          <p data-testid="total-field">0</p>
+          <p data-testid="total-field">{this.sumWithExchange()}</p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
         <form>
