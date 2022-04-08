@@ -53,8 +53,8 @@ class Wallet extends React.Component {
     }
   }
 
-  // Ajuda de Thiago Zardo, Laís Nametala e Kleverson Eller (Tribo C) no requisito 6.
-  // Não consigo alterar os dados do form
+  // Ajuda de Thiago Zardo, Laís Nametala e Kleverson Eller (Tribo C), Lazáro Andriola, e
+  // Gabriel Pinheiro (na monitoria) no requisito 6.
 
   sumWithExchange = () => {
     const { expenses } = this.props;
