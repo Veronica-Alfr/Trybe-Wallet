@@ -209,7 +209,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   currenciesData: (data) => dispatch(currencies(data)),
-  // dataAPI: () => dispatch(fetchAPI()),
   stateGlobal: (obj) => dispatch(getData(obj)),
 });
 
@@ -217,7 +216,6 @@ Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   currenciesData: PropTypes.func.isRequired,
   currenciesExpenses: PropTypes.arrayOf(PropTypes.string).isRequired,
-  // dataAPI: PropTypes.func.isRequired,
   stateGlobal: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
