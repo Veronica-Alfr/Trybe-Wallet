@@ -42,7 +42,7 @@ class Wallet extends React.Component {
       stateGlobal(obj);
       this.setState((prev) => ({
         id: prev.id + 1,
-        value: 0,
+        value: 0.00,
         description: '',
         currency: 'USD',
         method: 'Dinheiro',
@@ -169,13 +169,26 @@ class Wallet extends React.Component {
               <th>Editar/Excluir</th>
             </tr>
           </thead>
-          {/* <td>{ test[0].description }</td> */}
           {
             expenses.map(
               (expense) => (
                 <tbody key={ expense.id }>
                   <tr>
                     <td>{ expense.description }</td>
+                    <td>{expense.tag}</td>
+                    <td>{expense.method}</td>
+                    <td>{expense.value}</td>
+                    <td>{expense.exchangeRates[expense.currency].name}</td>
+                    <td>{expense.exchangeRates[expense.currency].code}</td>
+                    <td>
+                      {Number(expense.value)
+                      * Number(expense.exchangeRates[expense.currency].ask).toFixed(2)}
+                    </td>
+                    <td>Real</td>
+                    <td>
+                      <button type="button">Editar</button>
+                      <button type="button">Excluir</button>
+                    </td>
                   </tr>
                 </tbody>),
             )
