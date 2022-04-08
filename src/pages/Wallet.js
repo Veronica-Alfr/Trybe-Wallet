@@ -177,12 +177,14 @@ class Wallet extends React.Component {
                     <td>{ expense.description }</td>
                     <td>{expense.tag}</td>
                     <td>{expense.method}</td>
-                    <td>{expense.value}</td>
+                    <td>{Number(expense.value).toFixed(2)}</td>
                     <td>{expense.exchangeRates[expense.currency].name}</td>
-                    <td>{expense.exchangeRates[expense.currency].code}</td>
                     <td>
-                      {Number(expense.value)
-                      * Number(expense.exchangeRates[expense.currency].ask).toFixed(2)}
+                      {Number(expense.exchangeRates[expense.currency].ask).toFixed(2)}
+                    </td>
+                    <td>
+                      {(Number(expense.value)
+                      * Number(expense.exchangeRates[expense.currency].ask)).toFixed(2)}
                     </td>
                     <td>Real</td>
                     <td>
